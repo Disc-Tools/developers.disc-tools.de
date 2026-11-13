@@ -52,15 +52,28 @@
             <div class="portal-intro"><h1>Documentation</h1></div>
             <section class="overview-section">
                 <h2>Link Cleaner quickstart</h2>
-                <p>Create an <a href="/portal/api-tokens/">API key</a> and set it as <code>DISC_TOOLS_API_KEY</code> in your shell. If you write your own client, set a descriptive <code>User-Agent</code> such as <code>MyDiscordBot/1.0</code>.</p>
-                <pre><code>curl https://developers.disc-tools.de/api/v1/link-cleaner \
+                <ol>
+                    <li>Sign in to the developer portal and open <a href="/portal/api-tokens/">API tokens</a>.</li>
+                    <li>Create a token and copy it. The portal displays the full token only when you create it.</li>
+                    <li>Run the example in Bash and paste the token at the prompt.</li>
+                </ol>
+                <pre><code>read -rs -p 'API token: ' DISC_TOOLS_API_KEY; printf '\n'
+curl -sS -i https://developers.disc-tools.de/api/v1/link-cleaner \
   -A 'DiscToolsExample/1.0' \
   -H "Authorization: Bearer $DISC_TOOLS_API_KEY" \
   -H 'Content-Type: application/json' \
-  -d '{"url":"https://example.com/watch?v=42&amp;utm_source=discord"}'</code></pre>
+  -d '{"url":"https://example.com/watch?v=42&amp;utm_source=discord"}'
+unset DISC_TOOLS_API_KEY</code></pre>
+                <p>Expect HTTP <code>200</code> and a JSON response whose <code>url</code> is <code>https://example.com/watch?v=42</code>. If you write your own client, set a descriptive <code>User-Agent</code> such as <code>MyDiscordBot/1.0</code>.</p>
                 <h2>POST /api/v1/link-cleaner</h2>
                 <p>Send a JSON object with one absolute HTTP or HTTPS <code>url</code> of up to 4,096 characters. The API removes UTM parameters and common ad click IDs. It processes the URL as text.</p>
-                <p><strong>200</strong> returns <code>url</code>, <code>removed</code> and <code>request_id</code>. <strong>400</strong> means the URL is invalid. <strong>401</strong> means the key or Premium access is invalid. <strong>429</strong> or <strong>503</strong> may occur when the service is busy or unavailable.</p>
+                <p>A successful response contains <code>url</code>, <code>removed</code>, and <code>request_id</code>.</p>
+                <ul>
+                    <li><strong>400</strong> — Check that the JSON contains an absolute HTTP or HTTPS URL.</li>
+                    <li><strong>401</strong> — Check the Bearer token and confirm your account still has Premium access. Create a new token if the old one was revoked.</li>
+                    <li><strong>429</strong> — Slow down requests. Wait for <code>Retry-After</code> when present. Otherwise, wait and increase the delay between retries.</li>
+                    <li><strong>503</strong> — The service is temporarily unavailable. Try again after a short delay.</li>
+                </ul>
             </section>
             <p id="login-status" role="status"></p>
         </main>
