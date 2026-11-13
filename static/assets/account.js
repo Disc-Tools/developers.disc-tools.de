@@ -24,7 +24,7 @@ async function checkAccess() {
         if (profile.name) accountName.textContent = profile.name;
         if (profile.avatarUrl) accountAvatar.src = profile.avatarUrl;
         if (!onPortal) {
-            loginStatus.textContent = 'You’re signed in with a Disc-Tools staff account.';
+            loginStatus.textContent = 'You’re signed in and have access to the developer portal.';
             loginLink.hidden = true;
             portalLink.hidden = false;
         }

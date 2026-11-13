@@ -8,7 +8,7 @@
     <meta name="description" content="Follow the development of the Disc-Tools API for bots, scripts and integrations.">
     <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
     <title>Disc-Tools Developers</title>
-    <link rel="stylesheet" href="/static/assets/developers.css?v=24">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=25">
 </head>
 <body>
     <header class="site-header">
@@ -59,7 +59,7 @@
 
         <section class="access" aria-labelledby="access">
             <h2 id="access">API access</h2>
-            <p id="login-status" role="status">Portal access currently requires active Disc-Tools Premium and a staff role in the Disc-Tools server. Follow the <a href="https://disc-tools.de/announcements/">announcements</a> for public beta access and limits.</p>
+            <p id="login-status" role="status">Portal access is available to members with the designated Discord role and to eligible Disc-Tools staff. Follow the <a href="https://disc-tools.de/announcements/">announcements</a> for public beta access and limits.</p>
         </section>
 
         <section class="content-section" id="quickstart" aria-labelledby="quickstart-title">
@@ -83,7 +83,23 @@
 }</code></pre>
                 </figure>
             </div>
-            <p><a href="/portal/documentation/">Read the full quickstart in the portal</a> (staff sign-in required).</p>
+            <p><a href="/portal/documentation/">Read the full quickstart in the portal</a> (Discord sign-in required).</p>
+        </section>
+
+        <section class="discord-banner" aria-labelledby="discord-banner-title">
+            <div>
+                <h2 id="discord-banner-title">Build for Discord</h2>
+                <p>Building a bot that reposts links from a submissions channel? Run each URL through Link Cleaner before your bot shares it.</p>
+                <a href="#quickstart">See how to call Link Cleaner</a>
+            </div>
+            <figure class="discord-flow">
+                <figcaption>Example bot workflow</figcaption>
+                <ol>
+                    <li>Read a link from a Discord message</li>
+                    <li>Clean the URL with the Disc-Tools API</li>
+                    <li>Post the cleaned link</li>
+                </ol>
+            </figure>
         </section>
 
         <section class="content-section" id="api" aria-labelledby="api-title">
@@ -130,7 +146,7 @@
             <div>
                 <details>
                     <summary>Can I create an API key today?</summary>
-                    <p>Eligible Disc-Tools staff can create keys in the portal. Public key creation opens with the beta.</p>
+                    <p>Members with portal access can create keys after signing in. Public key creation opens with the beta.</p>
                 </details>
                 <details>
                     <summary>Does signing in to Disc-Tools also sign me in here?</summary>
@@ -165,7 +181,7 @@
             </div>
         </div>
     </footer>
-    <script src="/static/assets/account.js?v=2"></script>
+    <script src="/static/assets/account.js?v=3"></script>
     <script src="/static/assets/cookie-notice.js?v=2"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#14151c">
     <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
     <title>Developer portal | Disc-Tools</title>
-    <link rel="stylesheet" href="/static/assets/developers.css?v=19">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=31">
 </head>
 <body class="portal-page">
     <header class="site-header">
@@ -34,53 +34,73 @@
         <nav class="portal-sidebar" aria-label="Developer portal">
             <details class="sidebar-group" data-sidebar-group="workspace" open>
                 <summary>Workspace</summary>
-                <a href="/portal/" aria-current="page">Overview</a>
+                <a href="/portal/" aria-current="page"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
             </details>
             <details class="sidebar-group" data-sidebar-group="api">
                 <summary>API</summary>
-                <a href="/portal/api-tokens/">API tokens</a>
-                <a href="/portal/documentation/">Documentation</a>
+                <a href="/portal/api-tokens/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a5 5 0 0 1-6.8 4.7L6 21H3v-3l2-2h2v-2l3.3-3.2A5 5 0 1 1 21 8Z"/><circle cx="16.5" cy="7.5" r="1"/></svg>API tokens</a>
+                <a href="/portal/documentation/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6C9 4 6 4 3 5v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14"/></svg>Documentation</a>
             </details>
             <details class="sidebar-group" data-sidebar-group="monitoring">
                 <summary>Monitoring</summary>
-                <a href="/portal/usage/">Usage</a>
-                <a href="/portal/request-logs/">Request logs</a>
+                <a href="/portal/usage/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v18h18M8 16v-4m5 4V8m5 8V5"/></svg>Usage</a>
+                <a href="/portal/request-logs/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8m-8 4h8m-8 4h5"/></svg>Request logs</a>
             </details>
-            <a class="sidebar-home" href="/">Back to home</a>
+            <a class="sidebar-home" href="/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7M5 9v12h14V9m-9 12v-6h4v6"/></svg>Back to home</a>
         </nav>
-        <main class="portal-main">
+        <main class="portal-main dashboard">
             <div class="portal-intro">
                 <h1>Overview</h1>
-                <p>Review your API keys and activity.</p>
+                <p>Track requests, check your API keys, and find your next step.</p>
             </div>
-            <section class="overview-section" aria-labelledby="overview-keys">
-                <div class="overview-heading">
-                    <h2 id="overview-keys">API keys</h2>
-                    <a href="/portal/api-tokens/">Manage keys</a>
-                </div>
-                <dl class="overview-stats" id="overview-stats" hidden>
-                    <div><dt>Total keys</dt><dd id="keys-total"></dd></div>
-                    <div><dt>Active</dt><dd id="keys-active"></dd></div>
-                    <div><dt>Expired</dt><dd id="keys-expired"></dd></div>
-                </dl>
-                <p id="overview-status" role="status">Loading API keys…</p>
-            </section>
-            <section class="overview-section" aria-labelledby="overview-activity">
-                <h2 id="overview-activity">Recent key creations</h2>
-                <p id="activity-empty">Loading activity…</p>
-                <ul class="overview-activity" id="key-activity" hidden></ul>
-            </section>
             <section class="overview-section" aria-labelledby="overview-usage">
-                <h2 id="overview-usage">API usage and request logs</h2>
-                <p id="overview-requests" role="status">Loading requests from the last 24 hours…</p>
-                <p><a href="/portal/usage/">View usage</a> · <a href="/portal/request-logs/">View request logs</a></p>
+                <div class="overview-heading">
+                    <h2 id="overview-usage">API usage · Last 24 hours</h2>
+                    <a href="/portal/usage/">View usage</a>
+                </div>
+                <dl class="overview-stats" id="request-stats" hidden>
+                    <div><dt>Requests</dt><dd id="requests-total"></dd></div>
+                    <div><dt>Success rate</dt><dd id="requests-success"></dd></div>
+                    <div><dt>Failed requests</dt><dd id="requests-failed"></dd></div>
+                </dl>
+                <p id="overview-requests" role="status">Loading request counts…</p>
+            </section>
+            <div class="dashboard-grid">
+                <section class="overview-section" aria-labelledby="overview-recent">
+                    <div class="overview-heading">
+                        <h2 id="overview-recent">Recent requests</h2>
+                        <a href="/portal/request-logs/">View logs</a>
+                    </div>
+                    <p id="request-activity-status" role="status">Loading recent requests…</p>
+                    <ul class="overview-activity request-activity" id="request-activity" hidden></ul>
+                </section>
+                <section class="overview-section" aria-labelledby="overview-keys">
+                    <div class="overview-heading">
+                        <h2 id="overview-keys">API keys</h2>
+                        <a href="/portal/api-tokens/">Manage keys</a>
+                    </div>
+                    <dl class="overview-stats" id="overview-stats" hidden>
+                        <div><dt>Total keys</dt><dd id="keys-total"></dd></div>
+                        <div><dt>Active</dt><dd id="keys-active"></dd></div>
+                        <div><dt>Expired</dt><dd id="keys-expired"></dd></div>
+                    </dl>
+                    <p id="overview-status" role="status">Loading API keys…</p>
+                    <h3 id="overview-activity">Recently created</h3>
+                    <p id="activity-empty">Loading activity…</p>
+                    <ul class="overview-activity" id="key-activity" aria-labelledby="overview-activity" hidden></ul>
+                </section>
+            </div>
+            <section class="overview-section dashboard-quickstart" aria-labelledby="overview-quickstart">
+                <h2 id="overview-quickstart">Make your first API request</h2>
+                <p>Create a key and use the Link Cleaner quickstart to send a test URL.</p>
+                <p><a href="/portal/api-tokens/">Open API tokens</a> · <a href="/portal/documentation/">Read the quickstart</a></p>
             </section>
             <p id="login-status" role="status"></p>
         </main>
     </div>
     <script defer src="/static/assets/sidebar.js"></script>
-    <script defer src="/static/assets/account.js?v=2"></script>
-    <script defer src="/static/assets/overview.js?v=2"></script>
+    <script defer src="/static/assets/account.js?v=3"></script>
+    <script defer src="/static/assets/overview.js?v=3"></script>
     <script defer src="/static/assets/cookie-notice.js?v=2"></script>
 </body>
 </html>

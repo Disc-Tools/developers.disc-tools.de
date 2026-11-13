@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#14151c">
     <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
     <title>API tokens | Disc-Tools</title>
-    <link rel="stylesheet" href="/static/assets/developers.css?v=19">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=31">
 </head>
 <body class="portal-page">
     <header class="site-header">
@@ -34,29 +34,29 @@
         <nav class="portal-sidebar" aria-label="Developer portal">
             <details class="sidebar-group" data-sidebar-group="workspace">
                 <summary>Workspace</summary>
-                <a href="/portal/">Overview</a>
+                <a href="/portal/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Overview</a>
             </details>
             <details class="sidebar-group" data-sidebar-group="api" open>
                 <summary>API</summary>
-                <a href="/portal/api-tokens/" aria-current="page">API tokens</a>
-                <a href="/portal/documentation/">Documentation</a>
+                <a href="/portal/api-tokens/" aria-current="page"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a5 5 0 0 1-6.8 4.7L6 21H3v-3l2-2h2v-2l3.3-3.2A5 5 0 1 1 21 8Z"/><circle cx="16.5" cy="7.5" r="1"/></svg>API tokens</a>
+                <a href="/portal/documentation/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6C9 4 6 4 3 5v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14"/></svg>Documentation</a>
             </details>
             <details class="sidebar-group" data-sidebar-group="monitoring">
                 <summary>Monitoring</summary>
-                <a href="/portal/usage/">Usage</a>
-                <a href="/portal/request-logs/">Request logs</a>
+                <a href="/portal/usage/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v18h18M8 16v-4m5 4V8m5 8V5"/></svg>Usage</a>
+                <a href="/portal/request-logs/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8m-8 4h8m-8 4h5"/></svg>Request logs</a>
             </details>
-            <a class="sidebar-home" href="/">Back to home</a>
+            <a class="sidebar-home" href="/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7M5 9v12h14V9m-9 12v-6h4v6"/></svg>Back to home</a>
         </nav>
         <main class="portal-main">
-            <div class="portal-intro token-intro">
+            <div id="token-list-intro" class="portal-intro token-intro">
                 <div>
                     <h1 id="api-tokens-title">API tokens</h1>
-                    <p>Token creation requires active Disc-Tools Premium.</p>
+                    <p>Create and manage API keys for your integrations.</p>
                 </div>
                 <button class="token-action" id="create-token" type="button" disabled>Create token</button>
             </div>
-            <section class="token-section" aria-labelledby="api-tokens-title">
+            <section id="token-list-section" class="token-section" aria-labelledby="api-tokens-title">
                 <div class="token-table-scroll" tabindex="0" role="region" aria-label="API token list">
                     <table class="token-table" aria-labelledby="api-tokens-title">
                         <thead>
@@ -66,13 +66,27 @@
                                 <th scope="col">Created</th>
                                 <th scope="col">Expires</th>
                                 <th scope="col">Last used</th>
+                                <th scope="col">Allowed IPs</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="token-list"></tbody>
                     </table>
                 </div>
-                <p id="token-status" role="status">Checking Premium status…</p>
+                <p id="token-status" role="status">Loading API tokens…</p>
+            </section>
+            <section id="token-edit-page" class="token-section" aria-labelledby="token-edit-title" hidden>
+                <div class="portal-intro">
+                    <a href="/portal/api-tokens/">← API tokens</a>
+                    <h1 id="token-edit-title">Edit API token</h1>
+                    <p id="token-edit-status" role="status">Loading API token…</p>
+                </div>
+                <div id="token-edit-form" class="token-editor" hidden></div>
+                <details id="token-revoke-section" hidden>
+                    <summary>Revoke token</summary>
+                    <p>Any integration using this key will lose access immediately.</p>
+                    <button class="token-action" id="revoke-token" type="button">Permanently revoke token</button>
+                </details>
             </section>
             <p id="login-status" role="status"></p>
         </main>
@@ -80,17 +94,32 @@
     <dialog class="token-dialog" id="token-dialog" aria-labelledby="token-dialog-title">
         <form id="token-form">
             <h2 id="token-dialog-title">Create API token</h2>
-            <label for="token-name">Token name</label>
-            <input id="token-name" name="name" type="text" placeholder="e.g. Moderation bot" maxlength="64" required autofocus>
-            <label for="token-expiry">Key duration</label>
-            <select id="token-expiry" name="expiry">
-                <option value="7">7 days</option>
-                <option value="30" selected>30 days</option>
-                <option value="90">90 days</option>
-                <option value="365">1 year</option>
-                <option value="unlimited">Unlimited</option>
-            </select>
-            <p>Automatic leak detection is unavailable. If you publish a token by mistake, revoke it from this page.</p>
+            <div id="token-name-field">
+                <label for="token-name">Token name</label>
+                <input id="token-name" name="name" type="text" placeholder="e.g. Moderation bot" maxlength="64" required autofocus>
+            </div>
+            <div class="token-setting">
+                <label for="token-expiry">Key duration</label>
+                <select id="token-expiry" name="expiry">
+                    <option value="keep" hidden disabled>Keep current expiration</option>
+                    <option value="7">7 days</option>
+                    <option value="30" selected>30 days</option>
+                    <option value="90">90 days</option>
+                    <option value="365">1 year</option>
+                    <option value="unlimited">Unlimited</option>
+                </select>
+            </div>
+            <div class="token-setting">
+                <label for="token-allowed-ip">Allowed IPs (optional)</label>
+                <div class="token-ip-field">
+                    <div class="token-ip-control">
+                        <ul id="token-ip-list" class="token-ip-list" aria-label="Allowed IP addresses" hidden></ul>
+                        <input id="token-allowed-ip" name="allowedIP" type="text" placeholder="e.g. 203.0.113.10" maxlength="45" autocomplete="off" spellcheck="false" aria-describedby="token-ip-help">
+                    </div>
+                    <p id="token-ip-help">Press Space or Enter to add an IPv4 or IPv6 address. Backspace removes the last address when the field is empty. An empty list allows any IP.</p>
+                </div>
+            </div>
+            <p id="token-create-help">If you publish a token by mistake, open Edit and revoke it.</p>
             <p id="token-form-error" role="alert"></p>
             <div class="token-dialog-actions">
                 <button class="token-action" id="cancel-token" type="button">Cancel</button>
@@ -110,8 +139,8 @@
         </form>
     </dialog>
     <script defer src="/static/assets/sidebar.js"></script>
-    <script defer src="/static/assets/account.js?v=2"></script>
-    <script defer src="/static/assets/api-tokens.js?v=7"></script>
+    <script defer src="/static/assets/account.js?v=3"></script>
+    <script defer src="/static/assets/api-tokens.js?v=13"></script>
     <script defer src="/static/assets/cookie-notice.js?v=2"></script>
 </body>
 </html>
