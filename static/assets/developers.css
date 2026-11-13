@@ -247,12 +247,6 @@ button.error-action:disabled { opacity: .65; cursor: wait; }
 #activity-status:not(:empty) { margin-bottom: .6rem; }
 .overview-section pre { overflow: auto; padding: .85rem; background: var(--surface); border: 1px solid var(--line); }
 
-@font-face {
-    font-family: "Font Awesome Solid";
-    src: url('/static/fonts/fa-solid-900.woff2') format('woff2');
-    font-weight: 900;
-    font-display: block;
-}
 .sidebar-group { margin-bottom: .45rem; }
 .sidebar-group summary {
     display: flex;
@@ -276,7 +270,6 @@ button.error-action:disabled { opacity: .65; cursor: wait; }
     transform: rotate(-45deg);
 }
 .sidebar-group[open] summary::after { transform: rotate(45deg); }
-.sidebar-icon { width: 1rem; text-align: center; color: var(--accent); font: 900 .85rem "Font Awesome Solid"; }
 .sidebar-group a { padding-inline-start: 2.4rem; }
 @media (max-width: 600px) {
     .portal-sidebar { flex-direction: column; }
