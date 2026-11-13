@@ -8,7 +8,7 @@
     <meta name="description" content="Follow the development of the Disc-Tools API for bots, scripts and integrations.">
     <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
     <title>Disc-Tools Developers</title>
-    <link rel="stylesheet" href="/static/assets/developers.css?v=23">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=24">
 </head>
 <body>
     <header class="site-header">
@@ -37,8 +37,9 @@
         <div class="hero">
             <div class="hero-copy">
                 <h1>Disc-Tools API</h1>
-                <p>Disc-Tools currently runs in the browser. We’re building an API so a Discord bot or script can run the same tools without someone pasting in a link, ID or date by hand.</p>
-                <p class="availability">Public API keys are still in development.</p>
+                <p>Use Disc-Tools in your own bots, scripts, and integrations. Link Cleaner removes tracking parameters from URLs while keeping parameters your links need.</p>
+                <p class="availability">Public API access is coming soon.</p>
+                <p><a href="#quickstart">See the Link Cleaner API example</a></p>
             </div>
             <figure class="example">
                 <figcaption>Link Cleaner · example input and output</figcaption>
@@ -52,12 +53,37 @@
                         <dd><code>https://example.com/watch?v=42</code></dd>
                     </div>
                 </dl>
+                <a class="example-link" href="https://disc-tools.de/tools/link-cleaner/">Try Link Cleaner in your browser</a>
             </figure>
         </div>
 
         <section class="access" aria-labelledby="access">
-            <h2 id="access">Staff access</h2>
-            <p id="login-status" role="status">Sign in with Discord. Access requires active Disc-Tools Premium and a staff role in the Disc-Tools server.</p>
+            <h2 id="access">API access</h2>
+            <p id="login-status" role="status">Portal access currently requires active Disc-Tools Premium and a staff role in the Disc-Tools server. Follow the <a href="https://disc-tools.de/announcements/">announcements</a> for public beta access and limits.</p>
+        </section>
+
+        <section class="content-section" id="quickstart" aria-labelledby="quickstart-title">
+            <h2 id="quickstart-title">Link Cleaner quickstart</h2>
+            <p class="section-intro">Send a URL to <code>POST /api/v1/link-cleaner</code> with a Bearer token. Set <code>DISC_TOOLS_API_KEY</code> to a key created in the portal to run this example.</p>
+            <div class="quickstart-examples">
+                <figure class="example">
+                    <figcaption>Request</figcaption>
+                    <pre tabindex="0" aria-label="Example curl request"><code>curl -sS https://developers.disc-tools.de/api/v1/link-cleaner \
+  -A 'DiscToolsExample/1.0' \
+  -H "Authorization: Bearer $DISC_TOOLS_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://example.com/watch?v=42&amp;utm_source=discord"}'</code></pre>
+                </figure>
+                <figure class="example">
+                    <figcaption>Example response · HTTP 200</figcaption>
+                    <pre tabindex="0" aria-label="Example JSON response"><code>{
+  "url": "https://example.com/watch?v=42",
+  "removed": ["utm_source"],
+  "request_id": "example-request-id"
+}</code></pre>
+                </figure>
+            </div>
+            <p><a href="/portal/documentation/">Read the full quickstart in the portal</a> (staff sign-in required).</p>
         </section>
 
         <section class="content-section" id="api" aria-labelledby="api-title">
@@ -69,7 +95,6 @@
                     <div>
                         <p>If your bot forwards links from a submissions channel, pass each URL through the cleaner before posting it. In the example above, <code>utm_source</code> is removed and <code>v=42</code> still identifies the video.</p>
                         <p>The same step fits into a script that saves shared links to a reading list or moderation log.</p>
-                        <a class="browser-link" href="https://disc-tools.de/tools/link-cleaner/">Open Link Cleaner</a>
                     </div>
                 </li>
                 <li>
@@ -105,7 +130,7 @@
             <div>
                 <details>
                     <summary>Can I create an API key today?</summary>
-                    <p>Key creation is still in development. Sign-in is available to Disc-Tools staff.</p>
+                    <p>Eligible Disc-Tools staff can create keys in the portal. Public key creation opens with the beta.</p>
                 </details>
                 <details>
                     <summary>Does signing in to Disc-Tools also sign me in here?</summary>
