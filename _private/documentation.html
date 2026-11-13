@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#14151c">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <title>Documentation | Disc-Tools</title>
+    <link rel="stylesheet" href="/static/assets/developers.css?v=18">
+</head>
+<body class="portal-page">
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions">
+                <details class="account-menu" id="account-menu">
+                    <summary id="account-toggle">
+                        <img class="account-avatar" id="account-avatar" src="/static/assets/img/logo.svg" alt="" width="28" height="28">
+                        <span class="account-name" id="account-name">Discord account</span>
+                    </summary>
+                    <div class="account-links">
+                        <button id="logout-button" type="button">Sign out</button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </header>
+
+    <div class="portal-layout">
+        <nav class="portal-sidebar" aria-label="Developer portal">
+            <details class="sidebar-group" data-sidebar-group="workspace">
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf625;</span>Workspace</summary>
+                <a href="/portal/">Overview</a>
+            </details>
+            <details class="sidebar-group" data-sidebar-group="api" open>
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf121;</span>API</summary>
+                <a href="/portal/api-tokens/">API tokens</a>
+                <a href="/portal/documentation/" aria-current="page">Documentation</a>
+            </details>
+            <details class="sidebar-group" data-sidebar-group="monitoring">
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf201;</span>Monitoring</summary>
+                <a href="/portal/usage/">Usage</a>
+                <a href="/portal/request-logs/">Request logs</a>
+            </details>
+            <a class="sidebar-home" href="/">Back to home</a>
+        </nav>
+        <main class="portal-main" data-activity="documentation">
+            <div class="portal-intro"><h1>Documentation</h1></div>
+            <section class="overview-section">
+                <h2>Link Cleaner quickstart</h2>
+                <p>Create an <a href="/portal/api-tokens/">API key</a> and set it as <code>DISC_TOOLS_API_KEY</code> in your shell. If you write your own client, set a descriptive <code>User-Agent</code> such as <code>MyDiscordBot/1.0</code>.</p>
+                <pre><code>curl https://developers.disc-tools.de/api/v1/link-cleaner \
+  -A 'DiscToolsExample/1.0' \
+  -H "Authorization: Bearer $DISC_TOOLS_API_KEY" \
+  -H 'Content-Type: application/json' \
+  -d '{"url":"https://example.com/watch?v=42&amp;utm_source=discord"}'</code></pre>
+                <h2>POST /api/v1/link-cleaner</h2>
+                <p>Send a JSON object with one absolute HTTP or HTTPS <code>url</code> of up to 4,096 characters. The API removes UTM parameters and common ad click IDs. It processes the URL as text.</p>
+                <p><strong>200</strong> returns <code>url</code>, <code>removed</code> and <code>request_id</code>. <strong>400</strong> means the URL is invalid. <strong>401</strong> means the key or Premium access is invalid. <strong>429</strong> or <strong>503</strong> may occur when the service is busy or unavailable.</p>
+            </section>
+            <p id="login-status" role="status"></p>
+        </main>
+    </div>
+    <script src="/static/assets/sidebar.js"></script>
+    <script src="/static/assets/account.js?v=2"></script>
+    <script src="/static/assets/cookie-notice.js?v=2"></script>
+</body>
+</html>

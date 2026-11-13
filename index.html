@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://developers.disc-tools.de/">
+    <meta name="theme-color" content="#14151c">
+    <meta name="description" content="Follow the development of the Disc-Tools API for bots, scripts and integrations.">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <title>Disc-Tools Developers</title>
+    <link rel="stylesheet" href="/static/assets/developers.css?v=23">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions">
+                <a id="login-link" href="/api/auth/developer-login"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3334.955-2.4192 2.1569-2.4192 1.211 0 2.1757 1.0952 2.157 2.4192 0 1.3333-.955 2.4192-2.157 2.4192zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3334.955-2.4192 2.1569-2.4192 1.211 0 2.1757 1.0952 2.157 2.4192 0 1.3333-.946 2.4192-2.157 2.4192z"/></svg> Sign in</a>
+                <details class="account-menu" id="account-menu" hidden>
+                    <summary id="account-toggle">
+                        <img class="account-avatar" id="account-avatar" src="/static/assets/img/logo.svg" alt="" width="28" height="28">
+                        <span class="account-name" id="account-name">Discord account</span>
+                    </summary>
+                    <div class="account-links">
+                        <a id="portal-link" href="/portal/" hidden>Portal</a>
+                        <button id="logout-button" type="button">Sign out</button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </header>
+
+    <main class="wrap">
+        <div class="hero">
+            <div class="hero-copy">
+                <h1>Disc-Tools API</h1>
+                <p>Disc-Tools currently runs in the browser. We’re building an API so a Discord bot or script can run the same tools without someone pasting in a link, ID or date by hand.</p>
+                <p class="availability">Public API keys are still in development.</p>
+            </div>
+            <figure class="example">
+                <figcaption>Link Cleaner · example input and output</figcaption>
+                <dl>
+                    <div>
+                        <dt>Before</dt>
+                        <dd><code>https://example.com/watch?v=42<mark>&amp;utm_source=discord</mark></code></dd>
+                    </div>
+                    <div>
+                        <dt>After</dt>
+                        <dd><code>https://example.com/watch?v=42</code></dd>
+                    </div>
+                </dl>
+            </figure>
+        </div>
+
+        <section class="access" aria-labelledby="access">
+            <h2 id="access">Staff access</h2>
+            <p id="login-status" role="status">Sign in with Discord. Access requires active Disc-Tools Premium and a staff role in the Disc-Tools server.</p>
+        </section>
+
+        <section class="content-section" id="api" aria-labelledby="api-title">
+            <h2 id="api-title">Planned API</h2>
+            <p class="section-intro">Link Cleaner is planned for the first beta. You can try all three tools in your browser today.</p>
+            <ul class="tool-list">
+                <li>
+                    <h3>Link Cleaner</h3>
+                    <div>
+                        <p>If your bot forwards links from a submissions channel, pass each URL through the cleaner before posting it. In the example above, <code>utm_source</code> is removed and <code>v=42</code> still identifies the video.</p>
+                        <p>The same step fits into a script that saves shared links to a reading list or moderation log.</p>
+                        <a class="browser-link" href="https://disc-tools.de/tools/link-cleaner/">Open Link Cleaner</a>
+                    </div>
+                </li>
+                <li>
+                    <h3>Snowflake Decoder</h3>
+                    <div>
+                        <p>A Discord ID contains the time the object was created. A moderation bot could decode a user ID when someone joins and include the account creation time in a staff log.</p>
+                        <p>The timestamp is part of the ID itself. A user’s join date for a particular server is a separate piece of information.</p>
+                        <a class="browser-link" href="https://disc-tools.de/tools/snowflake-decoder/">Open Snowflake Decoder</a>
+                    </div>
+                </li>
+                <li>
+                    <h3>Timestamp Generator</h3>
+                    <div>
+                        <p>Put a timestamp like <code>&lt;t:1794592800:F&gt;</code> in an event announcement and Discord displays the date and time in each reader’s local time zone. Use <code>:R</code> instead of <code>:F</code> for a relative time such as “in 2 hours”.</p>
+                        <p>A scheduling bot could generate that markup from the event’s start time and reuse it in the announcement and reminder.</p>
+                        <a class="browser-link" href="https://disc-tools.de/tools/timestamp-generator/">Open Timestamp Generator</a>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="content-section roadmap" aria-labelledby="roadmap-title">
+            <h2 id="roadmap-title">What’s being built</h2>
+            <div>
+                <p><strong>Key management.</strong> Create a key for an integration in the developer portal and revoke it when you retire the integration or replace its key.</p>
+                <p><strong>API reference.</strong> The reference will cover request examples, response formats and limits so you can wire up a caller and handle errors.</p>
+                <p>If you’re planning an integration, tell us what your bot receives and what you need back in the <a href="https://discord.gg/rtRs8rhj5u">Disc-Tools Discord</a>. Follow the <a href="https://disc-tools.de/announcements/">project announcements</a> for release updates.</p>
+            </div>
+        </section>
+
+        <section class="content-section questions" id="faq" aria-labelledby="faq-title">
+            <h2 id="faq-title">FAQ</h2>
+            <div>
+                <details>
+                    <summary>Can I create an API key today?</summary>
+                    <p>Key creation is still in development. Sign-in is available to Disc-Tools staff.</p>
+                </details>
+                <details>
+                    <summary>Does signing in to Disc-Tools also sign me in here?</summary>
+                    <p>The developer portal has its own Discord sign-in and session.</p>
+                </details>
+                <details>
+                    <summary>Where will API updates be posted?</summary>
+                    <p>Check the <a href="https://disc-tools.de/announcements/">Disc-Tools announcements</a> for updates on beta access and the API reference.</p>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="wrap footer-row">
+            <a class="brand" href="/">
+                <img src="/static/assets/img/logo.svg" alt="" width="26" height="26">
+                <span>Disc-Tools Developers</span>
+            </a>
+            <div class="footer-links">
+                <nav aria-labelledby="footer-disc-tools">
+                    <h2 id="footer-disc-tools">Disc-Tools</h2>
+                    <a href="https://disc-tools.de/">Main site</a>
+                    <a href="https://status.disc-tools.de/#cat-main-site">Status</a>
+                </nav>
+                <nav aria-labelledby="footer-legal">
+                    <h2 id="footer-legal">Legal</h2>
+                    <a href="/legal/imprint/">Imprint</a>
+                    <a href="/legal/privacy-policy/">Privacy Policy</a>
+                    <a href="/legal/terms-of-service/">Terms of Service</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+    <script src="/static/assets/account.js?v=2"></script>
+    <script src="/static/assets/cookie-notice.js?v=2"></script>
+</body>
+</html>

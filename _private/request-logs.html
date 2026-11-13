@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#14151c">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <title>Request logs | Disc-Tools</title>
+    <link rel="stylesheet" href="/static/assets/developers.css?v=18">
+</head>
+<body class="portal-page">
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions">
+                <details class="account-menu" id="account-menu">
+                    <summary id="account-toggle">
+                        <img class="account-avatar" id="account-avatar" src="/static/assets/img/logo.svg" alt="" width="28" height="28">
+                        <span class="account-name" id="account-name">Discord account</span>
+                    </summary>
+                    <div class="account-links">
+                        <button id="logout-button" type="button">Sign out</button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </header>
+
+    <div class="portal-layout">
+        <nav class="portal-sidebar" aria-label="Developer portal">
+            <details class="sidebar-group" data-sidebar-group="workspace">
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf625;</span>Workspace</summary>
+                <a href="/portal/">Overview</a>
+            </details>
+            <details class="sidebar-group" data-sidebar-group="api">
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf121;</span>API</summary>
+                <a href="/portal/api-tokens/">API tokens</a>
+                <a href="/portal/documentation/">Documentation</a>
+            </details>
+            <details class="sidebar-group" data-sidebar-group="monitoring" open>
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf201;</span>Monitoring</summary>
+                <a href="/portal/usage/">Usage</a>
+                <a href="/portal/request-logs/" aria-current="page">Request logs</a>
+            </details>
+            <a class="sidebar-home" href="/">Back to home</a>
+        </nav>
+        <main class="portal-main" data-activity="request-logs">
+            <div class="portal-intro"><h1>Request logs</h1></div>
+            <form class="activity-filters" id="activity-filters">
+                <label>Period <select name="period"><option value="1d">Last 24 hours</option><option value="7d" selected>Last 7 days</option><option value="30d">Last 30 days</option></select></label>
+                <label>API key <select name="key"><option value="">All keys</option></select></label>
+                <label>Status <select name="status"><option value="">All statuses</option><option value="failed">Errors only</option></select></label>
+                <label>Day (UTC) <input type="date" name="day"></label>
+                <button class="token-action" type="submit">Apply filters</button>
+            </form>
+            <p id="activity-status" role="status">Loading activity…</p>
+            <div class="token-table-scroll" tabindex="0" role="region" aria-label="API activity">
+                <table class="token-table" aria-label="Request logs">
+                    <thead><tr><th scope="col">Time</th><th scope="col">Key</th><th scope="col">Endpoint</th><th scope="col">Status</th><th scope="col">Processing time</th><th scope="col">Request ID</th></tr></thead>
+                    <tbody id="activity-rows"></tbody>
+                </table>
+            </div>
+            <p id="login-status" role="status"></p>
+        </main>
+    </div>
+    <script src="/static/assets/sidebar.js"></script>
+    <script src="/static/assets/account.js?v=2"></script>
+    <script src="/static/assets/activity.js"></script>
+    <script src="/static/assets/cookie-notice.js?v=2"></script>
+</body>
+</html>

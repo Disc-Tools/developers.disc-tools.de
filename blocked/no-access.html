@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#14151c">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <title>Access denied | Disc-Tools</title>
+    <link rel="stylesheet" href="/static/assets/developers.css?v=18">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions">
+                <button id="blocked-logout" type="button">Sign out</button>
+            </div>
+        </div>
+    </header>
+    <main class="wrap error-page">
+        <section class="error-panel" aria-labelledby="error-title">
+            <p class="error-label">Developer portal</p>
+            <h1 id="error-title">Access denied</h1>
+            <p id="access-reason" role="status">An active Disc-Tools Premium membership is required to use the developer portal.</p>
+            <div class="error-actions">
+                <button class="error-action" id="refresh-status" type="button">Refresh status</button>
+                <a class="error-action" href="/">Back to developer home</a>
+            </div>
+            <p id="blocked-status" role="status"></p>
+        </section>
+    </main>
+    <script>
+        const button = document.getElementById('blocked-logout');
+        const refresh = document.getElementById('refresh-status');
+        const status = document.getElementById('blocked-status');
+        const title = document.getElementById('error-title');
+        const reason = document.getElementById('access-reason');
+
+        async function checkAccess() {
+            refresh.disabled = true;
+            status.textContent = 'Checking access…';
+            try {
+                const response = await fetch('/api/auth/developer-access', { cache: 'no-store' });
+                if (response.ok) {
+                    window.location.replace('/portal/');
+                    return;
+                }
+                if (response.status === 401) {
+                    window.location.replace('/');
+                    return;
+                }
+                if (response.status !== 403) throw new Error();
+
+                const { error } = await response.json();
+                title.textContent = 'Access denied';
+                reason.textContent = 'Your account still doesn’t have access to the developer portal.';
+                if (error === 'Active Disc-Tools Premium is required.') {
+                    title.textContent = 'Premium required';
+                    reason.textContent = 'Your Discord account doesn’t have an active Disc-Tools Premium membership.';
+                } else if (error === 'Your account does not have portal access.') {
+                    reason.textContent = 'Your Discord account doesn’t have a staff role for the developer portal.';
+                }
+                status.textContent = '';
+            } catch {
+                status.textContent = 'Couldn’t check access. Please try again.';
+            } finally {
+                refresh.disabled = false;
+            }
+        }
+
+        refresh.addEventListener('click', checkAccess);
+        checkAccess();
+        button.addEventListener('click', async () => {
+            button.disabled = true;
+            try {
+                const response = await fetch('/api/auth/developer-logout', { method: 'POST' });
+                if (!response.ok) throw new Error();
+                window.location.replace('/');
+            } catch {
+                status.textContent = 'Sign-out failed. Please try again.';
+                button.disabled = false;
+            }
+        });
+    </script>
+    <script src="/static/assets/cookie-notice.js?v=2"></script>
+</body>
+</html>

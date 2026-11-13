@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#14151c">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <title>API tokens | Disc-Tools</title>
+    <link rel="stylesheet" href="/static/assets/developers.css?v=18">
+</head>
+<body class="portal-page">
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions">
+                <details class="account-menu" id="account-menu">
+                    <summary id="account-toggle">
+                        <img class="account-avatar" id="account-avatar" src="/static/assets/img/logo.svg" alt="" width="28" height="28">
+                        <span class="account-name" id="account-name">Discord account</span>
+                    </summary>
+                    <div class="account-links">
+                        <button id="logout-button" type="button">Sign out</button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </header>
+
+    <div class="portal-layout">
+        <nav class="portal-sidebar" aria-label="Developer portal">
+            <details class="sidebar-group" data-sidebar-group="workspace">
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf625;</span>Workspace</summary>
+                <a href="/portal/">Overview</a>
+            </details>
+            <details class="sidebar-group" data-sidebar-group="api" open>
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf121;</span>API</summary>
+                <a href="/portal/api-tokens/" aria-current="page">API tokens</a>
+                <a href="/portal/documentation/">Documentation</a>
+            </details>
+            <details class="sidebar-group" data-sidebar-group="monitoring">
+                <summary><span class="sidebar-icon" aria-hidden="true">&#xf201;</span>Monitoring</summary>
+                <a href="/portal/usage/">Usage</a>
+                <a href="/portal/request-logs/">Request logs</a>
+            </details>
+            <a class="sidebar-home" href="/">Back to home</a>
+        </nav>
+        <main class="portal-main">
+            <div class="portal-intro token-intro">
+                <div>
+                    <h1 id="api-tokens-title">API tokens</h1>
+                    <p>Token creation requires active Disc-Tools Premium.</p>
+                </div>
+                <button class="token-action" id="create-token" type="button" disabled>Create token</button>
+            </div>
+            <section class="token-section" aria-labelledby="api-tokens-title">
+                <div class="token-table-scroll" tabindex="0" role="region" aria-label="API token list">
+                    <table class="token-table" aria-labelledby="api-tokens-title">
+                        <thead>
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Created</th>
+                                <th scope="col">Expires</th>
+                                <th scope="col">Last used</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="token-list"></tbody>
+                    </table>
+                </div>
+                <p id="token-status" role="status">Checking Premium status…</p>
+            </section>
+            <p id="login-status" role="status"></p>
+        </main>
+    </div>
+    <dialog class="token-dialog" id="token-dialog" aria-labelledby="token-dialog-title">
+        <form id="token-form">
+            <h2 id="token-dialog-title">Create API token</h2>
+            <label for="token-name">Token name</label>
+            <input id="token-name" name="name" type="text" placeholder="e.g. Moderation bot" maxlength="64" required autofocus>
+            <label for="token-expiry">Key duration</label>
+            <select id="token-expiry" name="expiry">
+                <option value="7">7 days</option>
+                <option value="30" selected>30 days</option>
+                <option value="90">90 days</option>
+                <option value="365">1 year</option>
+                <option value="unlimited">Unlimited</option>
+            </select>
+            <p>Automatic leak detection is unavailable. If you publish a token by mistake, revoke it from this page.</p>
+            <p id="token-form-error" role="alert"></p>
+            <div class="token-dialog-actions">
+                <button class="token-action" id="cancel-token" type="button">Cancel</button>
+                <button class="token-action" id="submit-token" type="submit">Create token</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog class="token-dialog" id="token-result" aria-labelledby="token-result-title" aria-describedby="token-result-description">
+        <h2 id="token-result-title">API token created</h2>
+        <p id="token-result-description">Copy this key now. It’s only shown once and can’t be viewed again after you close this window.</p>
+        <label for="token-secret">API key</label>
+        <input id="token-secret" type="text" readonly autocomplete="off" spellcheck="false">
+        <p id="copy-status" role="status"></p>
+        <form method="dialog" class="token-dialog-actions">
+            <button class="token-action" type="submit">Done</button>
+            <button class="token-action" id="copy-token" type="button" autofocus>Copy</button>
+        </form>
+    </dialog>
+    <script src="/static/assets/sidebar.js"></script>
+    <script src="/static/assets/account.js?v=2"></script>
+    <script src="/static/assets/api-tokens.js?v=7"></script>
+    <script src="/static/assets/cookie-notice.js?v=2"></script>
+</body>
+</html>
