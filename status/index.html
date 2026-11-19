@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#14151c">
+    <meta name="description" content="Check the current reachability of the Disc-Tools Link Cleaner API.">
+    <link rel="canonical" href="https://developers.disc-tools.de/status/">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=37">
+    <title>API Status | Disc-Tools</title>
+</head>
+<body class="api-status-page">
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions"><a href="/">Developers home</a></div>
+        </div>
+    </header>
+    <main class="wrap status-main">
+        <h1>API Status</h1>
+        <div class="status-board" id="api-status-board" data-state="checking">
+            <div class="status-summary">
+                <span class="status-indicator" aria-hidden="true"></span>
+                <p id="api-tool-status" role="status">Checking API availability…</p>
+            </div>
+            <section class="status-service status-dependency" id="status-link-cleaner" aria-labelledby="status-link-cleaner-heading">
+                <div>
+                    <h2 id="status-link-cleaner-heading">Link Cleaner</h2>
+                    <code>POST /api/v1/link-cleaner</code>
+                </div>
+                <div class="status-service-result">
+                    <span class="status-latency" aria-label="Response time">—</span>
+                    <span class="status-badge">Checking</span>
+                </div>
+            </section>
+            <section class="status-service status-dependency" id="status-batch" aria-labelledby="status-batch-heading">
+                <div>
+                    <h2 id="status-batch-heading">Batch Link Cleaner</h2>
+                    <code>POST /api/v1/link-cleaner/batch</code>
+                </div>
+                <div class="status-service-result">
+                    <span class="status-latency" aria-label="Response time">—</span>
+                    <span class="status-badge">Checking</span>
+                </div>
+            </section>
+            <section class="status-service status-dependency" id="status-timestamp" aria-labelledby="status-timestamp-heading">
+                <div>
+                    <h2 id="status-timestamp-heading">Discord Timestamp</h2>
+                    <code>POST /api/v1/discord/timestamp</code>
+                </div>
+                <div class="status-service-result">
+                    <span class="status-latency" aria-label="Response time">—</span>
+                    <span class="status-badge">Checking</span>
+                </div>
+            </section>
+            <section class="status-service status-dependency" id="status-login" aria-labelledby="status-login-heading">
+                <div>
+                    <h2 id="status-login-heading">Discord login</h2>
+                    <p>OAuth redirect</p>
+                </div>
+                <div class="status-service-result">
+                    <span class="status-latency" aria-label="Response time">—</span>
+                    <span class="status-badge">Checking</span>
+                </div>
+            </section>
+            <section class="status-service status-dependency" id="status-premium" aria-labelledby="status-premium-heading">
+                <div>
+                    <h2 id="status-premium-heading">Premium verification</h2>
+                    <p>Membership database check</p>
+                </div>
+                <div class="status-service-result">
+                    <span class="status-latency" aria-label="Response time">—</span>
+                    <span class="status-badge">Checking</span>
+                </div>
+            </section>
+            <div class="status-check">
+                <dl>
+                    <div>
+                        <dt>Last checked</dt>
+                        <dd><time id="api-status-checked">—</time></dd>
+                    </div>
+                </dl>
+                <button class="token-action" id="api-status-refresh" type="button" disabled>Check again</button>
+            </div>
+        </div>
+        <p class="status-note">Each time measures a separate check from your browser. The Discord login check stops at the OAuth redirect.</p>
+        <noscript><p class="status-note">Enable JavaScript to check the current status.</p></noscript>
+    </main>
+    <footer class="site-footer">
+        <div class="wrap footer-row">
+            <a class="brand" href="/">
+                <img src="/static/assets/img/logo.svg" alt="" width="26" height="26">
+                <span>Disc-Tools Developers</span>
+            </a>
+            <div class="footer-links">
+                <nav aria-labelledby="footer-disc-tools">
+                    <h2 id="footer-disc-tools">Disc-Tools</h2>
+                    <a href="https://disc-tools.de/">Main site</a>
+                    <a href="https://status.disc-tools.de/#cat-main-site">Main site status</a>
+                    <a href="/changelog/">API changelog</a>
+                </nav>
+                <nav aria-labelledby="footer-legal">
+                    <h2 id="footer-legal">Legal</h2>
+                    <a href="/legal/imprint/">Imprint</a>
+                    <a href="/legal/privacy-policy/">Privacy Policy</a>
+                    <a href="/legal/terms-of-service/">Terms of Service</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+    <script defer src="/static/assets/api-tools.js?v=4"></script>
+    <script defer src="/static/assets/cookie-notice.js?v=2"></script>
+</body>
+</html>

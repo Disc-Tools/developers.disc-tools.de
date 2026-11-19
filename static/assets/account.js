@@ -10,7 +10,7 @@ const logoutButton = document.getElementById('logout-button');
 
 async function checkAccess() {
     try {
-        const response = await fetch('/api/auth/developer-access');
+        const response = await fetch(onPortal ? '/api/auth/developer-access' : '/api/auth/developer-profile');
         if (response.status === 401) {
             if (onPortal) window.location.replace('/');
             return;
@@ -21,10 +21,12 @@ async function checkAccess() {
         }
         if (!response.ok) throw new Error();
         const profile = await response.json();
+        if (!profile) return;
         if (profile.name) accountName.textContent = profile.name;
         if (profile.avatarUrl) accountAvatar.src = profile.avatarUrl;
         if (!onPortal) {
-            loginStatus.textContent = 'You’re signed in and have access to the developer portal.';
+            const accessNotice = loginStatus.closest('.access');
+            if (accessNotice) accessNotice.hidden = true;
             loginLink.hidden = true;
             portalLink.hidden = false;
         }

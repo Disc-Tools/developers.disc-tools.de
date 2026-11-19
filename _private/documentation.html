@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#14151c">
     <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
     <title>Documentation | Disc-Tools</title>
-    <link rel="stylesheet" href="/static/assets/developers.css?v=31">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=39">
 </head>
 <body class="portal-page">
     <header class="site-header">
@@ -40,11 +40,13 @@
                 <summary>API</summary>
                 <a href="/portal/api-tokens/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 8a5 5 0 0 1-6.8 4.7L6 21H3v-3l2-2h2v-2l3.3-3.2A5 5 0 1 1 21 8Z"/><circle cx="16.5" cy="7.5" r="1"/></svg>API tokens</a>
                 <a href="/portal/documentation/" aria-current="page"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 6C9 4 6 4 3 5v14c3-1 6-1 9 1 3-2 6-2 9-1V5c-3-1-6-1-9 1Zm0 0v14"/></svg>Documentation</a>
+                <a href="/portal/playground/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 6-6 6 6 6m6-12 6 6-6 6"/></svg>API Playground</a>
             </details>
             <details class="sidebar-group" data-sidebar-group="monitoring">
                 <summary>Monitoring</summary>
                 <a href="/portal/usage/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 3v18h18M8 16v-4m5 4V8m5 8V5"/></svg>Usage</a>
                 <a href="/portal/request-logs/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8m-8 4h8m-8 4h5"/></svg>Request logs</a>
+                <a href="/status/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg>API Status</a>
             </details>
             <a class="sidebar-home" href="/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m3 10 9-7 9 7M5 9v12h14V9m-9 12v-6h4v6"/></svg>Back to home</a>
         </nav>
@@ -66,14 +68,33 @@ curl -sS -i https://developers.disc-tools.de/api/v1/link-cleaner \
 unset DISC_TOOLS_API_KEY</code></pre>
                 <p>Expect HTTP <code>200</code> and a JSON response whose <code>url</code> is <code>https://example.com/watch?v=42</code>. If you write your own client, set a descriptive <code>User-Agent</code> such as <code>MyDiscordBot/1.0</code>.</p>
                 <h2>POST /api/v1/link-cleaner</h2>
-                <p>Send a JSON object with one absolute HTTP or HTTPS <code>url</code> of up to 4,096 characters. The API removes UTM parameters and common ad click IDs. It processes the URL as text.</p>
-                <p>A successful response contains <code>url</code>, <code>removed</code>, and <code>request_id</code>.</p>
+                <p>Send a JSON object with one absolute HTTP or HTTPS <code>url</code> of up to 4,096 characters. The API processes the URL as text and never fetches the destination.</p>
+                <p>Every successful response includes the final URL as a string in <code>url</code>. If cleaning would risk invalidating a signature, that string is the original URL. Invalid input returns HTTP <code>400</code> with an <code>error</code>. <code>stats.total</code> matches the number of distinct names in <code>removed</code>, and <code>stats.categories</code> adds up to that same total. <code>stats.occurrences</code> counts every removal, including repeated keys. <code>candidates</code> lists possible trackers that were kept, and <code>candidate_details</code> gives each candidate a name and category. The response also includes <code>request_id</code>.</p>
+                <h3>Tracking rules</h3>
+                <ul>
+                    <li><strong>Campaigns and ads</strong> — <code>utm_*</code> and platform-specific parameters such as <code>gclid</code>, <code>gad_source</code>, <code>fbclid</code>, <code>ttclid</code>, <code>msclkid</code>, <code>twclid</code>, and <code>li_fat_id</code>.</li>
+                    <li><strong>Email, affiliate and analytics</strong> — identifiers such as <code>mc_cid</code>, <code>_hsmi</code>, <code>mkt_tok</code>, <code>irclickid</code>, and <code>mtm_campaign</code>.</li>
+                    <li><strong>Site-specific sharing</strong> — parameters such as YouTube <code>si</code>, TikTok <code>sender_device</code>, and Amazon product-link <code>tag</code> are scoped to their platforms.</li>
+                </ul>
+                <p>The cleaner preserves fragments, recognized signed URLs and ambiguous identifiers such as <code>session_id</code>. Known redirect fields can contain HTTP or HTTPS destinations. The cleaner handles up to four layers of percent encoding and visits up to three nested destinations by default. Removal statistics include all visited levels. Set <code>"recursive": false</code> in the single or batch request body to clean only the outer URLs.</p>
                 <ul>
                     <li><strong>400</strong> — Check that the JSON contains an absolute HTTP or HTTPS URL.</li>
                     <li><strong>401</strong> — Check the Bearer token and confirm your account still has API access. Create a new token if the old one was revoked.</li>
                     <li><strong>429</strong> — Slow down requests. Wait for <code>Retry-After</code> when present. Otherwise, wait and increase the delay between retries.</li>
                     <li><strong>503</strong> — The service is temporarily unavailable. Try again after a short delay.</li>
                 </ul>
+                <h3>Signed URLs</h3>
+                <p>When the cleaner detects a signature marker, it preserves that URL and any redirect data it contains byte for byte. <code>protected_urls</code> lists the nesting depth and detected signature parameter names. <code>retained</code> lists recognized trackers left in place with their category, depth, and reason. <code>signed_url</code> means the tracker is in a signed URL. <code>signed_ancestor</code> means editing the nested URL could change a signed parent. These trackers do not count as removals.</p>
+                <h2>POST /api/v1/link-cleaner/batch</h2>
+                <p>Send between 1 and 20 URLs in a <code>urls</code> array. The JSON request body is limited to 10 KB.</p>
+                <pre><code>{"urls":["https://example.com/?utm_source=discord","https://example.org/"]}</code></pre>
+                <p>A successful batch returns a <code>results</code> array in input order. Each item has a <code>status</code> and either <code>url</code> and <code>removed</code>, or an <code>error</code>.</p>
+                <h2>POST /api/v1/discord/timestamp</h2>
+                <p>Send a UTC date and time in ISO format or provide <code>timestamp</code> as Unix seconds. Choose a <code>style</code> from <code>t</code>, <code>T</code>, <code>d</code>, <code>D</code>, <code>f</code>, <code>F</code>, or <code>R</code>. The default is <code>f</code>.</p>
+                <pre><code>{"datetime":"2026-12-01T18:00:00Z","style":"R"}</code></pre>
+                <p>The response contains <code>timestamp</code>, <code>style</code>, <code>markup</code> for Discord, and <code>request_id</code>. Both POST endpoints use the same Bearer token header as Link Cleaner.</p>
+                <h2>GET /api/v1/status</h2>
+                <p>This public endpoint returns <code>login</code> and <code>premium</code> booleans for OAuth configuration and database query availability. See <a href="/status/">API Status</a> for the browser checks.</p>
             </section>
             <p id="login-status" role="status"></p>
         </main>

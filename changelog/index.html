@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#14151c">
+    <meta name="description" content="Follow new endpoints, access changes, and updates to the Disc-Tools developer portal.">
+    <link rel="canonical" href="https://developers.disc-tools.de/changelog/">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=38">
+    <title>API Changelog | Disc-Tools</title>
+</head>
+<body class="changelog-page">
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions"><a href="/">Developers home</a></div>
+        </div>
+    </header>
+    <main class="wrap changelog-main">
+        <header class="changelog-intro">
+            <h1>API Changelog</h1>
+            <p>Updates to the Disc-Tools API and developer portal.</p>
+        </header>
+
+        <div class="changelog-entries">
+            <div class="changelog-release">
+                <time datetime="2026-11-18">November 18, 2026</time>
+                <article aria-labelledby="november-update">
+                    <h2 id="november-update">New endpoints and API monitoring</h2>
+                    <ul class="changelog-changes">
+                        <li>
+                            <h3>Batch Link Cleaner</h3>
+                            <code>POST /api/v1/link-cleaner/batch</code>
+                            <p>Clean up to 20 URLs in one request and get a result for each URL in input order.</p>
+                        </li>
+                        <li>
+                            <h3>Discord Timestamp</h3>
+                            <code>POST /api/v1/discord/timestamp</code>
+                            <p>Convert a UTC date or Unix timestamp to Discord timestamp markup.</p>
+                        </li>
+                        <li>
+                            <h3>Public API Status</h3>
+                            <p>The <a href="/status/">status page</a> shows individual reachability checks and response times for API endpoints, Discord login and Premium verification. Monitoring clients can check login configuration and Premium lookup availability via <code>GET /api/v1/status</code>.</p>
+                        </li>
+                        <li>
+                            <h3>Premium portal access and API Playground</h3>
+                            <p>Anyone with active Disc-Tools Premium can access the developer portal after signing in with Discord. In the Playground, you can try Link Cleaner with your own API token.</p>
+                        </li>
+                    </ul>
+                    <a class="changelog-docs" href="/portal/documentation/">Read the API documentation →</a>
+                </article>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="wrap footer-row">
+            <a class="brand" href="/">
+                <img src="/static/assets/img/logo.svg" alt="" width="26" height="26">
+                <span>Disc-Tools Developers</span>
+            </a>
+            <div class="footer-links">
+                <nav aria-labelledby="footer-disc-tools">
+                    <h2 id="footer-disc-tools">Disc-Tools</h2>
+                    <a href="https://disc-tools.de/">Main site</a>
+                    <a href="https://status.disc-tools.de/#cat-main-site">Main site status</a>
+                    <a href="/status/">API status</a>
+                </nav>
+                <nav aria-labelledby="footer-legal">
+                    <h2 id="footer-legal">Legal</h2>
+                    <a href="/legal/imprint/">Imprint</a>
+                    <a href="/legal/privacy-policy/">Privacy Policy</a>
+                    <a href="/legal/terms-of-service/">Terms of Service</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+    <script defer src="/static/assets/cookie-notice.js?v=2"></script>
+</body>
+</html>
