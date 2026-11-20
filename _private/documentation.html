@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#14151c">
     <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
     <title>Documentation | Disc-Tools</title>
-    <link rel="stylesheet" href="/static/assets/developers.css?v=39">
+    <link rel="stylesheet" href="/static/assets/developers.css?v=42">
 </head>
 <body class="portal-page">
     <header class="site-header">
@@ -23,6 +23,7 @@
                         <span class="account-name" id="account-name">Discord account</span>
                     </summary>
                     <div class="account-links">
+                        <a href="/account/">Account</a>
                         <button id="logout-button" type="button">Sign out</button>
                     </div>
                 </details>
@@ -80,7 +81,7 @@ unset DISC_TOOLS_API_KEY</code></pre>
                 <ul>
                     <li><strong>400</strong> — Check that the JSON contains an absolute HTTP or HTTPS URL.</li>
                     <li><strong>401</strong> — Check the Bearer token and confirm your account still has API access. Create a new token if the old one was revoked.</li>
-                    <li><strong>429</strong> — Slow down requests. Wait for <code>Retry-After</code> when present. Otherwise, wait and increase the delay between retries.</li>
+                    <li><strong>429</strong> — Each API token can make up to 60 requests in 60 seconds and up to 11 requests in 2 seconds, shared across authenticated endpoints. Exceeding either limit triggers a cooldown. Repeated violations within 24 hours can extend the cooldown and temporarily block all keys on your account. Wait for the number of seconds in <code>Retry-After</code> before retrying. Check your <a href="/account/api-access/">API access page</a> for warnings and active restrictions.</li>
                     <li><strong>503</strong> — The service is temporarily unavailable. Try again after a short delay.</li>
                 </ul>
                 <h3>Signed URLs</h3>
@@ -100,7 +101,7 @@ unset DISC_TOOLS_API_KEY</code></pre>
         </main>
     </div>
     <script defer src="/static/assets/sidebar.js"></script>
-    <script defer src="/static/assets/account.js?v=3"></script>
-    <script defer src="/static/assets/cookie-notice.js?v=2"></script>
+    <script defer src="/static/assets/account.js?v=8"></script>
+    <script defer src="/static/assets/cookie-notice.js?v=7"></script>
 </body>
 </html>

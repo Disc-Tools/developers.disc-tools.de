@@ -101,6 +101,48 @@
         }
     });
 
+    function renderStatus(token) {
+        const badge = document.createElement(token.blocked_until ? 'button' : 'span');
+        const label = {
+            active: 'Active', blocked: 'Blocked', temporarily_blocked: 'Temporarily blocked', expired: 'Expired'
+        };
+        const state = Object.hasOwn(label, token.status) ? token.status : token.expired ? 'expired' : 'active';
+        badge.className = 'access-badge';
+        badge.dataset.accessState = state === 'temporarily_blocked' ? 'temporary' : state;
+        badge.textContent = label[state];
+        if (!token.blocked_until) return badge;
+
+        const details = document.createElement('div');
+        const popover = document.createElement('div');
+        popover.id = 'token-block-' + token.id;
+        popover.className = 'token-block-popover';
+        popover.setAttribute('popover', 'auto');
+        badge.type = 'button';
+        badge.setAttribute('popovertarget', popover.id);
+        popover.addEventListener('beforetoggle', event => {
+            if (event.newState !== 'open') return;
+            const anchor = badge.getBoundingClientRect();
+            popover.style.setProperty('--token-status-left', anchor.left + 'px');
+            const showAbove = window.innerHeight - anchor.bottom < 90;
+            popover.style.top = showAbove ? 'auto' : anchor.bottom + 6 + 'px';
+            popover.style.bottom = showAbove ? window.innerHeight - anchor.top + 6 + 'px' : 'auto';
+        });
+
+        const until = document.createElement('time');
+        until.dateTime = token.blocked_until;
+        until.textContent = 'Blocked until ' + dateFormat.format(new Date(token.blocked_until));
+        popover.append(until);
+        details.append(badge, popover);
+        return details;
+    }
+
+    function closeTokenPopover() {
+        list.querySelector('.token-block-popover:popover-open')?.hidePopover();
+    }
+
+    window.addEventListener('scroll', closeTokenPopover, { capture: true, passive: true });
+    window.addEventListener('resize', closeTokenPopover);
+
     function render() {
         const { can_create: canCreate, tokens } = tokenState;
         create.disabled = pending || !canCreate;
@@ -112,8 +154,8 @@
             name.scope = 'row';
             name.textContent = token.name;
             row.append(name);
+            row.insertCell().append(renderStatus(token));
             for (const value of [
-                token.expired ? 'Expired' : 'Active',
                 dateFormat.format(new Date(token.created_at)),
                 token.expires_at ? dateFormat.format(new Date(token.expires_at)) : 'Unlimited',
                 token.last_used_at ? dateFormat.format(new Date(token.last_used_at)) : 'Not tracked yet',

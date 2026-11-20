@@ -327,6 +327,47 @@ button.error-action:disabled { opacity: .65; cursor: wait; }
 .overview-activity li { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .15rem 1rem; padding-block: .5rem; overflow-wrap: anywhere; }
 .overview-activity li + li { border-top: 1px solid var(--line); }
 .overview-activity time { color: var(--muted); font-size: .875rem; }
+.access-badge {
+    display: inline-block;
+    padding: .14rem .55rem;
+    border: 1px solid currentColor;
+    border-radius: .3rem;
+    color: var(--muted);
+    font-size: .82rem;
+    font-weight: 650;
+}
+.access-badge[data-access-state="active"], dd[data-access-state="active"] { color: #91d7ae; }
+.access-badge[data-access-state="temporary"], dd[data-access-state="temporary"] { color: #efc48e; }
+.access-badge[data-access-state="blocked"] { color: #ffb4ab; }
+button.access-badge { background: transparent; cursor: pointer; font-family: inherit; }
+.token-block-popover {
+    position: fixed;
+    inset: auto;
+    left: clamp(.5rem, var(--token-status-left, .5rem), max(.5rem, calc(100vw - 19.5rem)));
+    margin: 0;
+    padding: .55rem .75rem;
+    width: max-content;
+    max-width: min(19rem, calc(100vw - 1rem));
+    border: 1px solid var(--line);
+    border-radius: .3rem;
+    background: var(--surface);
+    color: var(--text);
+    box-shadow: 0 .3rem 1rem rgb(0 0 0 / .35);
+    font-size: .82rem;
+    white-space: normal;
+}
+.dashboard .overview-section .rate-limit-warning {
+    margin-top: 1rem;
+    padding: .55rem .75rem;
+    border-inline-start: 3px solid #efc48e;
+    background: var(--surface);
+    color: #efc48e;
+}
+.dashboard .overview-section .rate-limit-scope { margin-top: .85rem; color: var(--text); }
+.rate-limit-rules { margin-top: 1rem; }
+.rate-limit-rules summary { color: var(--accent); cursor: pointer; }
+.rate-limit-rules p { margin-top: .4rem; }
+
 .dashboard { --dashboard-gap: clamp(1rem, 2vw, 1.5rem); padding-bottom: 2rem; }
 .dashboard-grid {
     display: grid;
@@ -395,12 +436,9 @@ button.error-action:disabled { opacity: .65; cursor: wait; }
     z-index: 3;
     inset-inline: 1rem;
     inset-block-end: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: .65rem 1rem;
-    width: fit-content;
-    max-width: min(34rem, calc(100% - 2rem));
+    display: grid;
+    gap: .85rem;
+    width: min(34rem, calc(100% - 2rem));
     margin-inline-start: auto;
     padding: .85rem 1rem;
     border: 1px solid var(--line);
@@ -408,20 +446,72 @@ button.error-action:disabled { opacity: .65; cursor: wait; }
     background: var(--surface);
     box-shadow: 0 .25rem 1rem rgb(0 0 0 / .3);
 }
-.cookie-notice > div { flex: 1 1 15rem; }
+.cookie-notice-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, max-content));
+    justify-content: end;
+    gap: .5rem;
+}
 .cookie-notice h2 { font-size: .95rem; letter-spacing: 0; }
 .cookie-notice p { margin-top: .3rem; font-size: .85rem; }
 .cookie-notice button {
     min-height: 44px;
-    padding-inline: .8rem;
+    padding: .35rem .75rem;
     border: 0;
     border-radius: .3rem;
     background: var(--accent);
     color: var(--bg);
     font: inherit;
+    font-size: .875rem;
+    line-height: 1.25;
     font-weight: 650;
     cursor: pointer;
 }
+
+.cookie-notice button[aria-expanded],
+.cookie-notice button[data-choice="essential"] {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    color: var(--text);
+}
+.cookie-notice-options {
+    border-top: 1px solid var(--line);
+    padding-top: .75rem;
+}
+.cookie-notice-option {
+    display: flex;
+    min-height: 44px;
+    gap: .75rem;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .875rem;
+}
+.cookie-notice button.cookie-switch {
+    flex: 0 0 2.65rem;
+    min-height: 1.55rem;
+    padding: 0 .18rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    color: var(--text);
+    background: var(--bg);
+}
+.cookie-switch::after {
+    content: "";
+    height: .95rem;
+    width: .95rem;
+    border-radius: 50%;
+    background: currentColor;
+}
+.cookie-notice button.cookie-switch[aria-checked="true"] {
+    justify-content: end;
+    background: var(--accent);
+    color: var(--bg);
+}
+.cookie-notice-save { display: flex; justify-content: end; margin-top: .55rem; }
+.developer-ad { margin-block: 1.5rem; color: var(--muted); font-size: .75rem; }
+.developer-ad:has(ins[data-ad-status="unfilled"]) { display: none; }
 
 @media (prefers-reduced-motion: no-preference) {
     .cookie-notice { animation: cookie-notice-in 240ms ease-out both; }

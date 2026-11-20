@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <meta name="theme-color" content="#14151c">
+    <link rel="icon" type="image/svg+xml" href="/static/assets/img/logo.svg">
+    <title>Settings | Disc-Tools</title>
+    <link rel="stylesheet" href="/static/assets/developers.css?v=42">
+</head>
+<body class="portal-page" data-account-page>
+    <header class="site-header">
+        <div class="header-row">
+            <a class="brand" href="/" aria-label="Disc-Tools Developers home">
+                <img src="/static/assets/img/logo.svg" alt="" width="32" height="32">
+                <span>Developers</span>
+            </a>
+            <div class="login-actions">
+                <details class="account-menu" id="account-menu">
+                    <summary id="account-toggle">
+                        <img class="account-avatar" id="account-avatar" src="/static/assets/img/logo.svg" alt="" width="28" height="28">
+                        <span class="account-name" id="account-name" data-account-text>Discord account</span>
+                    </summary>
+                    <div class="account-links">
+                        <a href="/portal/" data-account-text>Portal</a>
+                        <button id="logout-button" type="button" data-account-text>Sign out</button>
+                    </div>
+                </details>
+            </div>
+        </div>
+    </header>
+
+    <div class="portal-layout">
+        <nav class="portal-sidebar" aria-label="Account" data-account-aria>
+            <a href="/account/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span data-account-text>Overview</span></a>
+            <a href="/account/details/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="3"/><path d="M5 20v-2a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v2"/></svg><span data-account-text>Account</span></a>
+            <a href="/account/api-access/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg><span data-account-text>API access</span></a>
+            <a href="/account/sessions/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4"/></svg><span data-account-text>Sessions</span></a>
+            <a href="/account/settings/" aria-current="page"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h5m4 0h7M4 12h10m4 0h2M4 17h2m4 0h10"/><circle cx="11" cy="7" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="8" cy="17" r="2"/></svg><span data-account-text>Settings</span></a>
+            <a class="sidebar-home" href="/portal/"><svg class="portal-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5m7-7-7 7 7 7"/></svg><span data-account-text>Developer portal</span></a>
+        </nav>
+        <main class="portal-main dashboard">
+            <div class="portal-intro"><h1 data-account-text>Settings</h1></div>
+            <section class="overview-section" aria-labelledby="display-settings">
+                <h2 id="display-settings" data-account-text>Display preferences</h2>
+                <p data-account-text>Choose the language for the account area and the time zone used for session activity and API restriction times. Your choices are saved in this browser.</p>
+                <form class="activity-filters" id="account-preferences">
+                    <label><span data-account-text>Language</span>
+                        <select name="language">
+                            <option value="en">English</option>
+                            <option value="de">Deutsch</option>
+                        </select>
+                    </label>
+                    <label><span data-account-text>Time zone</span>
+                        <select name="timeZone">
+                            <option value="local" data-account-text>Local time</option>
+                            <option value="UTC">UTC</option>
+                        </select>
+                    </label>
+                    <button type="submit" class="token-action" data-account-text>Save preferences</button>
+                </form>
+                <p id="preferences-status" role="status"></p>
+            </section>
+            <p id="login-status" role="status"></p>
+        </main>
+    </div>
+    <script defer src="/static/assets/account-preferences.js?v=3"></script>
+    <script defer src="/static/assets/account.js?v=8"></script>
+    <script defer src="/static/assets/cookie-notice.js?v=7"></script>
+</body>
+</html>
